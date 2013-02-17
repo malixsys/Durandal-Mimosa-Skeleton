@@ -20,21 +20,7 @@
     }
 
     requirejs.onResourceLoad = function(context, map, depArray) {
-        var module = context.defined[map.id];
-        if (!module) {
-            return;
-        }
-
-        if (typeof module == 'function') {
-            module.prototype.__moduleId__ = map.id;
-            return;
-        }
-
-        if (typeof module == 'string') {
-            return;
-        }
-
-        module.__moduleId__ = map.id;
+        system.setModuleId(context.defined[map.id], map.id);
     };
 
     var noop = function() { };
@@ -68,14 +54,38 @@
     };
 
     system = {
-        version:"1.1.0",
+        version:"1.1.1",
         noop: noop,
         getModuleId: function(obj) {
             if (!obj) {
                 return null;
             }
+            
+            if (typeof obj == 'function') {
+                return obj.prototype.__moduleId__;
+            }
+
+            if (typeof obj == 'string') {
+                return null;
+            }
 
             return obj.__moduleId__;
+        },
+        setModuleId: function (obj, id) {
+            if (!obj) {
+                return;
+            }
+
+            if (typeof obj == 'function') {
+                obj.prototype.__moduleId__ = id;
+                return;
+            }
+
+            if (typeof obj == 'string') {
+                return;
+            }
+
+            obj.__moduleId__ = id;
         },
         debug: function(enable) {
             if (arguments.length == 1) {
