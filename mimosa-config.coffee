@@ -6,12 +6,12 @@ exports.config =
   combine:
     folders: [
       {
-        folder:'Content'
+        folder:'Content/css'
         output:'Content/styles.css'
         order: ['bootstrap.css', 'bootstrap-responsive.css']
       }
       {
-        folder:'Scripts'
+        folder:'Scripts/vendor'
         output:'Scripts/vendor.js'
         order: ['jquery-1.9.1.js', 'knockout-2.2.1.js']
       }
