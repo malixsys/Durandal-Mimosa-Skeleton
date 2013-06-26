@@ -42,6 +42,3 @@ exports.config =
         stubModules: ['text']
         paths:
           text: 'durandal/amd/text'
-
-  minify:
-    exclude:[/\.min\./, 'App/durandal/amd/r.js']
