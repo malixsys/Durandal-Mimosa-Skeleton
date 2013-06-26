@@ -9,6 +9,8 @@ if "%1"=="buildo" goto buildo
 if "%1"=="clean" goto clean
 if "%1"=="pack" goto package
 if "%1"=="package" goto package
+if "%1"=="dist" goto dist
+if "%1"=="distribute" goto dist
 
 echo make: *** No rule to make target `%1'.  Stop.
 exit
@@ -36,3 +38,11 @@ exit
 :pack
     echo [x] Building and packaging application...
     mimosa build -omp
+
+:dist
+    echo [x] Building and distributing application...
+    call mimosa clean --force
+    call mimosa build -om
+    rmdir /S /Q dist
+    xcopy /S /Q public dist\
+    copy views\index-optimize.html dist\index.html
