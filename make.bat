@@ -13,7 +13,7 @@ if "%1"=="dist" goto dist
 if "%1"=="distribute" goto dist
 
 echo make: *** No rule to make target `%1'.  Stop.
-exit
+goto exit
 
 :start
     echo [x] Building assets and starting development server...
@@ -46,3 +46,5 @@ exit
     rmdir /S /Q dist
     xcopy /S /Q public dist\
     copy views\index-optimize.html dist\index.html
+
+:exit
