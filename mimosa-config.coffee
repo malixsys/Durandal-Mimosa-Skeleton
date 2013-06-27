@@ -1,30 +1,31 @@
 exports.config =
-  minMimosaVersion:'0.8.7'
+  minMimosaVersion:'0.10.0'
 
   modules: ['server', 'require', 'minify', 'live-reload', 'combine', 'mimosa-requirebuild-textplugin-include', 'skeleton']
 
-  combine:[
-    {
-      folder:'Content'
-      output:'Content/styles.css'
-      order: ['bootstrap.css', 'bootstrap-responsive.css']
-    }
-    {
-      folder:'Scripts'
-      output:'Scripts/vendor.js'
-      order: ['jquery-1.9.1.js', 'knockout-2.2.1.js']
-    }
-  ]
-
-  copy:
-    extensions: ['js', 'css', 'png', 'jpg', 'jpeg', 'gif', 'htm', 'html', 'eot', 'svg', 'ttf', 'woff', 'otf', 'yaml', 'kml', 'ico', 'htc', 'json', 'txt', 'xml', 'xsd']
+  combine:
+    folders: [
+      {
+        folder:'Content'
+        output:'Content/styles.css'
+        order: ['bootstrap.css', 'bootstrap-responsive.css']
+        exclude: [/[\\\/]font[\\\/]/, /[\\\/]images[\\\/]/]
+      }
+      {
+        folder:'Scripts'
+        output:'Scripts/vendor.js'
+        order: ['jquery-1.9.1.js', 'knockout-2.2.1.js']
+      }
+    ]
 
   watch:
     javascriptDir: 'App'
 
   server:
     port: 3000
-    useDefaultServer: true
+    defaultServer:
+      enabled: true
+      onePager: true
 
     views:
       compileWith: 'html'
