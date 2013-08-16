@@ -1,45 +1,68 @@
 exports.config =
-  minMimosaVersion:'0.10.0'
+  # 0.14.12 is needed for optimization to work properly
+  minMimosaVersion:'0.14.12'
 
-  modules: ['server', 'require', 'minify', 'live-reload', 'combine', 'mimosa-requirebuild-textplugin-include', 'skeleton']
-
-  combine:
-    folders: [
-      {
-        folder:'Content'
-        output:'Content/styles.css'
-        order: ['bootstrap.css', 'bootstrap-responsive.css']
-        exclude: [/[\\\/]font[\\\/]/, /[\\\/]images[\\\/]/]
-      }
-      {
-        folder:'Scripts'
-        output:'Scripts/vendor.js'
-        order: ['jquery-1.9.1.js', 'knockout-2.2.1.js']
-      }
-    ]
+  modules: [
+    'server'
+    'require'
+    'minify'
+    'live-reload'
+    'combine'
+    'requirebuild-include'
+    'requirebuild-textplugin-include'
+    'bower'
+    'lint'
+  ]
 
   watch:
-    javascriptDir: 'App'
-
-  server:
-    port: 3000
-    defaultServer:
-      enabled: true
-      onePager: true
-
-    views:
-      compileWith: 'html'
-      extension: 'html'
+    javascriptDir: 'javascripts/app'
 
   requireBuildTextPluginInclude:
     pluginPath: 'text'
     extensions: ['html']
 
+  requireBuildInclude:
+    folder:"javascripts"
+    patterns: ['app/**/*.js', 'vendor/durandal/**/*.js']
+
+  bower:
+    copy:
+      mainOverrides:
+        "knockout.js":["knockout.js","knockout-2.3.0.debug.js"]
+        "bootstrap": [
+          "docs/assets/js/bootstrap.js"
+          "docs/assets/css/bootstrap.css"
+          "docs/assets/css/bootstrap-responsive.css"
+        ]
+
+  combine:
+    folders: [
+      {
+        folder:'stylesheets'
+        output:'stylesheets/styles.css'
+        order: [
+          'vendor/bootstrap/bootstrap.css'
+          'vendor/bootstrap/bootstrap-responsive.css'
+          'vendor/font-awesome.css'
+          'durandal.css'
+          'starterkit.css'
+        ]
+      }
+    ]
+
+  server:
+    defaultServer:
+      enabled: true
+      onePager: true
+    views:
+      compileWith: 'html'
+      extension: 'html'
+
   require:
     optimize:
       overrides:
-        name: 'durandal/amd/almond-custom'
+        name: '../vendor/almond-custom'
         inlineText: true
         stubModules: ['text']
-        paths:
-          text: 'durandal/amd/text'
+        pragmas:
+          build: true
