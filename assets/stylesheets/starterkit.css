@@ -43,7 +43,7 @@
     visibility: hidden;
 }
 
-.loader.active {
+.navbar-inner div.active {
     visibility: visible;
 }
 
